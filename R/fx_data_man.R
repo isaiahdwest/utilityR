@@ -116,12 +116,15 @@ map_fns <- function(.x, .fns, error_handling = "do-nothing") {
 }
 
 # Generic form
+#'@title assign multiple results to multiple variables
+#'@name Multiple-Assignment
 #'@export
-'%=%' = function(l, r, ...) UseMethod('%=%')
+'%=%' <-  function(l, r, ...) UseMethod('%=%')
 
 # Binary Operator
+#'@rdname Multiple Assignment
 #'@export
-'%=%.lbunch' = function(l, r, ...) {
+'%=%.lbunch' <-  function(l, r, ...) {
   Envir = as.environment(-1)
 
   if (length(r) > length(l))
@@ -136,7 +139,9 @@ map_fns <- function(.x, .fns, error_handling = "do-nothing") {
     do.call('<-', list(l[[II]], r[[II]]), envir=Envir)
   }
 }
+
 # Used if LHS is larger than RHS
+#'@export
 extendToMatch <- function(source, destin) {
   s <- length(source)
   d <- length(destin)

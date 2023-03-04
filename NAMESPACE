@@ -2,6 +2,7 @@
 
 S3method("%=%",lbunch)
 export("%=%")
+export(extendToMatch)
 export(g)
 export(joinCoalesce)
 export(map_fns)

@@ -8,7 +8,7 @@
 \usage{
 l \%=\% r
 
-\method{\%=\%}{lbunch}(l, r, ...)
+`\%=\%.lbunch`(l, r, ...)
 }
 \description{
 assign multiple results to multiple variables

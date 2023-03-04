@@ -118,13 +118,15 @@ map_fns <- function(.x, .fns, error_handling = "do-nothing") {
 # Generic form
 #'@title assign multiple results to multiple variables
 #'@name Multiple-Assignment
+#'@rdname pyop
 #'@export
-`%=%` <-  function(l, r, ...) {
+"%=%" <-  function(l, r, ...) {
   UseMethod('`%=%`')
   }
 
-#'@rdname Multiple-Assignment
+#'@rdname pyop
 #'@export
+#'
 `%=%.lbunch` <-  function(l, r, ...) {
   Envir = as.environment(-1)
 
@@ -140,6 +142,9 @@ map_fns <- function(.x, .fns, error_handling = "do-nothing") {
     do.call('<-', list(l[[II]], r[[II]]), envir=Envir)
   }
 }
+
+`%=%` = `%=%.lbunch`
+
 
 # Used if LHS is larger than RHS
 #'@export

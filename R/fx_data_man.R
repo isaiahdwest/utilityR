@@ -119,7 +119,9 @@ map_fns <- function(.x, .fns, error_handling = "do-nothing") {
 #'@title assign multiple results to multiple variables
 #'@name Multiple-Assignment
 #'@export
-`%=%` <-  function(l, r, ...) UseMethod('%=%')
+`%=%` <-  function(l, r, ...) {
+  UseMethod('`%=%`')
+  }
 
 #'@rdname Multiple-Assignment
 #'@export

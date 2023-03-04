@@ -120,6 +120,7 @@ map_fns <- function(.x, .fns, error_handling = "do-nothing") {
 '%=%' = function(l, r, ...) UseMethod('%=%')
 
 # Binary Operator
+#'@export
 '%=%.lbunch' = function(l, r, ...) {
   Envir = as.environment(-1)
 

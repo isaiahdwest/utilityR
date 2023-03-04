@@ -121,8 +121,7 @@ map_fns <- function(.x, .fns, error_handling = "do-nothing") {
 #'@export
 `%=%` <-  function(l, r, ...) UseMethod('%=%')
 
-# Binary Operator
-#'@rdname Multiple Assignment
+#'@rdname Multiple-Assignment
 #'@export
 `%=%.lbunch` <-  function(l, r, ...) {
   Envir = as.environment(-1)

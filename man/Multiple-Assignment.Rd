@@ -3,9 +3,12 @@
 \name{Multiple-Assignment}
 \alias{Multiple-Assignment}
 \alias{\%=\%}
+\alias{\%=\%.lbunch}
 \title{assign multiple results to multiple variables}
 \usage{
 l \%=\% r
+
+\method{\%=\%}{lbunch}(l, r, ...)
 }
 \description{
 assign multiple results to multiple variables

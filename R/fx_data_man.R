@@ -201,3 +201,38 @@ na_if_func <- function(x, .f, ...) {
 
 }
 
+#' @title Data Ingest
+#' @description Find the correct row to use as column names without needing
+#' to specify \code{read_excel(..., skip = 3)}. Simply read in data and pipe
+#' here.
+#' @param .data A \code{data.frame} that needs clean names
+#' @param sensitivity A numeric indicating how many name repaired column names to allow before picking column headers
+#' @param clean_names A boolean, whether to return the \code{data.frame} with cleaned names from \code{janitor} package
+#'
+#'
+#'@export
+
+guess_names <- function(.data, sensitivity = 1, clean_names =TRUE) {
+
+  result <- .data
+  valid_names <- sensitivity > sum(stringr::str_detect(names(result), "V[0-9]+|X[0-9]+")) + sum(names(result) == "")
+
+  while (!valid_names) {
+    tryCatch({
+      suppressWarnings(result <- result %>%
+                         janitor::row_to_names(1))
+      valid_names <- sensitivity > sum(stringr::str_detect(names(result), "V[0-9]+|X[0-9]+")) + sum(names(result) == "")
+      row.names(result) <- 1:nrow(result)
+    },
+    error = function(e) {
+      print(e)
+    })
+  }
+
+  if (clean_names) {
+    result %>% janitor::clean_names()
+  } else {
+    result
+  }
+}
+

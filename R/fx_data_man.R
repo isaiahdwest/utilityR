@@ -185,3 +185,19 @@ g = function(...) {
   return(List)
 }
 
+#' @title Na if extension
+#' @description Extends \code{na_if}, convert data to \code{NA} if behavior is
+#' detected. Useful in mutates and long pipes. Equivalent to \code{x[f(x)]}.
+#' @param x object that contains values to be switched to NA
+#' @param .f a function that returns a boolean, such as \code{stringr::str_detect}
+#' @examples \dontrun{
+#' mutate(mtcars, mpg2 = na_if_func(mpg, function(x) x > 30))
+#' }
+#' @export
+na_if_func <- function(x, .f, ...) {
+
+  x[.f(x, ...)] <- NA
+  x
+
+}
+

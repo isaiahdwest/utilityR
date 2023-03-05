@@ -236,3 +236,60 @@ guess_names <- function(.data, sensitivity = 1, clean_names =TRUE) {
   }
 }
 
+#' @title Base Stringr
+#' @description Stringr functions rewritten to use only base functions
+#' @param text Text string to have matched
+#' @param pattern Text string to match in text
+#' @details \code{grext} is the equivalent of \code{stringr::str_extract}
+#' @export
+grext <- function(text, pattern) {
+  regmatches(text, regexpr(pattern, text))
+}
+
+
+#' @title Base Stringr
+#' @description Stringr functions rewritten to use only base functions
+#' @param text Text string to have matched
+#' @param pattern Text string to match in text
+#' @param simplify Whether to return an unlisted character vector, default
+#' is \code{FALSE} and returns list
+#' @details \code{grextall} is the equivalent of \code{stringr::str_extract_all}
+#' @export
+grextall <- function(text, pattern, simplify = FALSE) {
+  out <- regmatches(text, gregexpr(pattern, text))
+  if (simplify) {
+    out[lengths(out) == 0] <- NA_character_
+    unlist(out)
+  } else {
+    out
+  }
+}
+
+package.dependencies <- function(package, level = c("Depends", "Imports", "Suggests")) {
+  pkgs <- as.data.frame(available.packages(), stringsAsFactors = FALSE)
+  if (nrow(pkgs[pkgs$Package == package,]) == 0) {stop("package is not available, check your repos")}
+  pkgs[package,level]
+}
+
+install.dependencies <- function(package, install = c("Depends", "Imports", "Suggests"), record = FALSE) {
+  deps <- as.character(package.dependencies(package = package, level = install))
+  deps_lst <- unlist(strsplit(gsub("\n", " ", deps), ", "))
+  deps_lst2 <- gsub( " \\(>= ","@", deps_lst[!grepl("R (.+)",deps_lst)])
+  deps_lst3 <- gsub("\\)$", "", deps_lst2)
+
+  # Check if already installed
+  deps_bar <- gsub("@[0-9\\.]+$", "", deps_lst3)
+  vers <- lapply(deps_bar, function(x) tryCatch({packageVersion(x)}, error = function(e) {NA}))
+  names(vers) <- deps_bar
+
+  names(deps_lst3) <- deps_bar
+
+  deps_ver <- grextall(text = deps_lst3, "\\d\\.\\d\\.\\d", simplify = T)
+  names(deps_ver) <- deps_bar
+  to_update <- names(which(deps_ver[names(deps_ver)[!is.na(deps_ver)]] >= vers[names(deps_ver)[!is.na(deps_ver)]]))
+
+  to_install <- append(deps_lst3[names(deps_ver[is.na(deps_ver)])], deps_lst3[to_update])
+
+  renv::install(to_install)
+  if (record) {renv::record(deps_lst3)}
+}

@@ -265,13 +265,26 @@ grextall <- function(text, pattern, simplify = FALSE) {
   }
 }
 
+
+#' @title Package-Dependencies
+#' @rdname pkg-dep
+#' @description Ever run into cases where package installation fails repeatedly,
+#' with a string of error messages for one package requiring different versions
+#' of different packages? Get a list of all dependencies with \code{package.dependencies}
+#' and install them all in one go with \code{install.dependencies}
+#' @param package Name of the package to look for dependencies for, as a character string
+#' @param level Character vector of the levels of dependencies to install, options are
+#' \code{c("Depends", "Imports", "Suggests")}.
+#' @param record Whether to recrd the newly installed package in your \code{renv.lock} file
+#' @export
 package.dependencies <- function(package, level = c("Depends", "Imports", "Suggests")) {
   pkgs <- as.data.frame(available.packages(), stringsAsFactors = FALSE)
   if (nrow(pkgs[pkgs$Package == package,]) == 0) {stop("package is not available, check your repos")}
   pkgs[package,level]
 }
 
-install.dependencies <- function(package, install = c("Depends", "Imports", "Suggests"), record = FALSE) {
+#' @rdname pkg-dep
+install.dependencies <- function(package, level = c("Depends", "Imports", "Suggests"), record = FALSE) {
   deps <- as.character(package.dependencies(package = package, level = install))
   deps_lst <- unlist(strsplit(gsub("\n", " ", deps), ", "))
   deps_lst2 <- gsub( " \\(>= ","@", deps_lst[!grepl("R (.+)",deps_lst)])
@@ -293,3 +306,5 @@ install.dependencies <- function(package, install = c("Depends", "Imports", "Sug
   renv::install(to_install)
   if (record) {renv::record(deps_lst3)}
 }
+
+

@@ -2,6 +2,7 @@
 
 export("%=%")
 export("%=%.lbunch")
+export(cf.int)
 export(extendToMatch)
 export(g)
 export(grext)
@@ -11,4 +12,5 @@ export(joinCoalesce)
 export(map_fns)
 export(na_if_func)
 export(package.dependencies)
+export(se)
 export(split2)

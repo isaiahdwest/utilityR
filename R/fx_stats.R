@@ -19,10 +19,10 @@ se <- function(.x) {
 cf.int <- function(.x, cf.perc = 0.95, cf.dist = NULL) {
 
   if (is.null(cf.dist)) {
-    cf.dist = ifelse(length(.x) > 30, "z", "t")
+    cf.dist <-  ifelse(length(.x) > 30, "z", "t")
   }
 
-  if (cf.dist == "Z") {
+  if (cf.dist == "z") {
     crit <- z.critical(cf.perc = cf.perc)
   } else if (cf.dist == "t") {
     crit <- t.critical(length(.x) - 1, cf.perc = cf.perc)

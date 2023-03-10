@@ -18,7 +18,7 @@ remotes::install_github("isaiahdwest/utilityR")
 - Cleanse bad data with `na_if_func`
 - Clean `data.frame` names from messy excel or csv files with `guess_names`
 - Multiple variable assignment with `g()` and `%=%`
-- Easiily pivot multiple columns into long format in parallel with `parallel_longer`
+- Easily pivot multiple columns into long format in parallel with `parallel_longer`
 
 ## Stats
 - Calculate standard error from the mean of a variable with `se()`

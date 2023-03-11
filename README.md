@@ -25,7 +25,7 @@ remotes::install_github("isaiahdwest/utilityR")
 - Calculate a confidence interval around the mean of a variable using `cf.int()`, using t-test or z-score critical values.
 
 ## Package Dependency
-- Check what dependencies an available package has with `package.dependencies("package")`
+- Check what dependencies that an available package has with `package.dependencies("package")`
 - install the dependencies for a package with `install.dependencies("package")`
 
 ## Extensions

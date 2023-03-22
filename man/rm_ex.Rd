@@ -16,7 +16,7 @@ Remove all objects from environment EXCEPT
 those that are specified.
 }
 \examples{
-\dontrun {
+\dontrun{
 a <- "TEST"
 b <- "TEST2"
 

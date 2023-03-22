@@ -19,7 +19,7 @@ split2 <- function(x, f, drop = FALSE, nm = NULL, ...) {
 #' those that are specified.
 #' @param ... what objects to retain in environment
 #' @param envir Which environment to remove objects from, default is the global environment
-#' @examples \dontrun {
+#' @examples \dontrun{
 #' a <- "TEST"
 #' b <- "TEST2"
 #'

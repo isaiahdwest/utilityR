@@ -18,13 +18,14 @@ remotes::install_github("isaiahdwest/utilityR")
 - Cleanse bad data with `na_if_func`
 - Clean `data.frame` names from messy excel or csv files with `guess_names`
 - Multiple variable assignment with `g()` and `%=%`
+- Easily pivot multiple columns into long format in parallel with `parallel_longer`
 
 ## Stats
 - Calculate standard error from the mean of a variable with `se()`
 - Calculate a confidence interval around the mean of a variable using `cf.int()`, using t-test or z-score critical values.
 
 ## Package Dependency
-- Check what dependencies an available package has with `package.dependencies("package")`
+- Check what dependencies that an available package has with `package.dependencies("package")`
 - install the dependencies for a package with `install.dependencies("package")`
 
 ## Extensions

@@ -59,9 +59,9 @@ joinCoalesce <- function(x, y, join, by = NULL, suffix = c(".x", ".y"), ignore =
   }
 
   oldName <- purrr::map_chr(toCoal,
-                     ~substr(.x,
-                             start = 1,
-                             stop = nchar(.x) - nchar(suffix[endsWith(.x, suffix)]))) %>%
+                            ~substr(.x,
+                                    start = 1,
+                                    stop = nchar(.x) - nchar(suffix[endsWith(.x, suffix)]))) %>%
     unique()
 
   outCols <- purrr::map(oldName, ~ dplyr::coalesce(
@@ -122,7 +122,7 @@ map_fns <- function(.x, .fns, error_handling = "do-nothing") {
 #'@export
 "%=%" <-  function(l, r, ...) {
   UseMethod('`%=%`')
-  }
+}
 
 #'@rdname pyop
 #'@export
@@ -307,4 +307,38 @@ install.dependencies <- function(package, level = c("Depends", "Imports", "Sugge
   if (record) {renv::record(deps_lst3)}
 }
 
+write_ts_file <- function(
+    obj,
+    dir,
+    name,
+    ext = ".csv",
+    cache = TRUE,
+    save_func = NULL,
+    ...) {
+
+  if (cache && !dir.exists(file.path(dir, paste0(name, "_timestampped")))) {
+    dir.create(file.path(dir, paste0(name, "_timestampped")))
+  }
+
+  base_fp0 <- file.path(dir, name)
+  time <- format(Sys.time(), "%Y-%m-%d_%H_%M_%S")
+  base_fp <- paste0(base_fp0, ext)
+  ts_fp <- if (cache) {
+    paste0(base_fp0, "_timestampped/", name, "_", time, ext)
+  } else {
+    paste0(base_fp0, "_", time, ext)
+  }
+
+  if (ext == ".csv") {
+    write.csv(obj, base_fp, ...)
+    write.csv(obj, ts_fp, ...)
+  } else if (ext == ".xlsx") {
+    openxlsx::write.xlsx(obj, file = base_fp, ...)
+    openxlsx::write.xlsx(obj, file = ts_fp, ...)
+  } else if (ext == ".png") {
+    ggplot2::ggsave(plot = obj, filename = base_fp, ...)
+    ggplot2::ggsave(plot = obj, filename = ts_fp, ...)
+  }
+
+}
 

@@ -307,13 +307,21 @@ install.dependencies <- function(package, level = c("Depends", "Imports", "Sugge
   if (record) {renv::record(deps_lst3)}
 }
 
-write_ts_file <- function(
+#' @title Save Time Stamped File
+#' @description Save a file and a timestamped copy of that file in a subfolder
+#' @param obj Object to save out
+#' @param dir Directory to save to
+#' @param name File name
+#' @param ext File extension to use
+#' @param cache Boolean of whether to create a dedicated time stamp folder to
+#' save timestampped files to
+#' @param ... Additional parameters to pass along
+save_ts_file <- function(
     obj,
     dir,
     name,
     ext = ".csv",
     cache = TRUE,
-    save_func = NULL,
     ...) {
 
   if (cache && !dir.exists(file.path(dir, paste0(name, "_timestampped")))) {
@@ -338,6 +346,9 @@ write_ts_file <- function(
   } else if (ext == ".png") {
     ggplot2::ggsave(plot = obj, filename = base_fp, ...)
     ggplot2::ggsave(plot = obj, filename = ts_fp, ...)
+  } else if (ext == ".rds") {
+    saveRDS(obj, file = base_fp, ...)
+    saveRDS(obj, file = ts_fp, ...)
   }
 
 }
